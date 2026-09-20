@@ -1,14 +1,14 @@
 from re import *
 
-
-def main() -> None:
-    print(calculate(input()))
+from constants import number_mask, operator_mask
 
 
-def calculate(expression: str):
-    number_mask = '[1-9]+[0-9]*|0'
-    operator_mask = '[+*/-]'
+def tokenize(expression: str) -> list:
     tokens = findall(f'({number_mask}|{operator_mask})', expression)
+    return tokens
+
+
+def calc(tokens: str):
     parsed = []
 
     for token in tokens:
@@ -19,9 +19,9 @@ def calculate(expression: str):
 
     i = 0
     while i < len(parsed):
-        if parsed[i] in ('*','/'):
-            if parsed[i+1] == 0 and parsed[i] == '/':
-                return 'Деление на 0'
+        if parsed[i] in ('*', '/'):
+            if parsed[i + 1] == 0 and parsed[i] == '/':
+                raise ValueError('Деление на 0')
             else:
                 res = parsed[i - 1] * parsed[i + 1] if parsed[i] == '*' else parsed[i - 1] / parsed[i + 1]
                 parsed[i - 1:i + 2] = [res]
@@ -29,12 +29,9 @@ def calculate(expression: str):
         i += 1
     i = 0
     while i < len(parsed):
-        if parsed[i] in ('+','-'):
+        if parsed[i] in ('+', '-'):
             res = parsed[i - 1] + parsed[i + 1] if parsed[i] == '+' else parsed[i - 1] - parsed[i + 1]
             parsed[i - 1: i + 2] = [res]
             i -= 1
         i += 1
     return parsed[0]
-
-if __name__ == "__main__":
-    main()
