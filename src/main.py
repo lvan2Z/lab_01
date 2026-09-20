@@ -1,20 +1,40 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
+from re import *
 
 
 def main() -> None:
-    """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
-    """
+    print(calculate(input()))
 
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
 
-    result = power_function(target=target, power=degree)
+def calculate(expression: str):
+    number_mask = '[1-9]+[0-9]*|0'
+    operator_mask = '[+*/-]'
+    tokens = findall(f'({number_mask}|{operator_mask})', expression)
+    parsed = []
 
-    print(result)
+    for token in tokens:
+        if match(f'^{number_mask}$', token):
+            parsed.append(float(token))
+        else:
+            parsed.append(token)
 
-    print(SAMPLE_CONSTANT)
+    i = 0
+    while i < len(parsed):
+        if parsed[i] in ('*','/'):
+            if parsed[i+1] == 0 and parsed[i] == '/':
+                return 'Деление на 0'
+            else:
+                res = parsed[i - 1] * parsed[i + 1] if parsed[i] == '*' else parsed[i - 1] / parsed[i + 1]
+                parsed[i - 1:i + 2] = [res]
+                i -= 1
+        i += 1
+    i = 0
+    while i < len(parsed):
+        if parsed[i] in ('+','-'):
+            res = parsed[i - 1] + parsed[i + 1] if parsed[i] == '+' else parsed[i - 1] - parsed[i + 1]
+            parsed[i - 1: i + 2] = [res]
+            i -= 1
+        i += 1
+    return parsed[0]
 
 if __name__ == "__main__":
     main()
