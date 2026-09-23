@@ -5,8 +5,8 @@ from . import converter
 app = typer.Typer()
 
 @app.command()
-def calc(name: str):
-    typer.echo(calculator.calc(name))
+def calc(expression: str):
+    typer.echo(calculator.calc(expression))
 
 @app.command()
 def convert(value: int, unit1: str, unit2: str):

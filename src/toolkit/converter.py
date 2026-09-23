@@ -1,5 +1,5 @@
 from .constants import length_units, mass_units, temp_units, length_to_m, mass_to_g
-
+from .errors import ConvertError
 
 def convert(value: float, unit1: str, unit2: str) -> float:
     unit1 = unit1.lower().strip()
@@ -26,7 +26,7 @@ def convert(value: float, unit1: str, unit2: str) -> float:
             k = value
 
         if k < 0:
-            raise ValueError('Температура ниже абсолютного нуля запрещена')
+            raise ConvertError('Температура ниже абсолютного нуля запрещена')
 
         if unit2 == 'c':
             result = k - 273
@@ -38,7 +38,7 @@ def convert(value: float, unit1: str, unit2: str) -> float:
         return float(result)
 
     else:
-        raise ValueError(
+        raise ConvertError(
             f'Конвертация между разными группами запрещена: '
             f"'{unit1}' -> '{unit2}'"
         )
