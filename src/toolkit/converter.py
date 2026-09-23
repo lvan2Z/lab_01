@@ -1,4 +1,4 @@
-from constants import length_units, mass_units, temp_units, length_to_m, mass_to_g
+from .constants import length_units, mass_units, temp_units, length_to_m, mass_to_g
 
 
 def convert(value: float, unit1: str, unit2: str) -> float:

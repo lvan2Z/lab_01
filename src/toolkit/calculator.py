@@ -1,10 +1,9 @@
-from re import *
-
-from constants import number_mask, operator_mask
+import re
+from .constants import number_mask, operator_mask
 
 
 def tokenize(expression: str) -> list:
-    tokens = findall(f'({number_mask}|{operator_mask})', expression)
+    tokens = re.findall(f'({number_mask}|{operator_mask})', expression)
     return tokens
 
 
@@ -12,7 +11,7 @@ def calc(tokens: str):
     parsed = []
 
     for token in tokens:
-        if match(f'^{number_mask}$', token):
+        if re.match(f'^{number_mask}$', token):
             parsed.append(float(token))
         else:
             parsed.append(token)
@@ -34,4 +33,5 @@ def calc(tokens: str):
             parsed[i - 1: i + 2] = [res]
             i -= 1
         i += 1
+
     return parsed[0]
