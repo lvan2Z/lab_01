@@ -13,5 +13,5 @@ mass_to_g = {
     "g": 1.0,
     "kg": 1000.0,
 }
-number_mask = '(?:[1-9]+[0-9]*|0)'
+number_mask = '(?:[1-9][.]*+[0-9]*|0)'
 operator_mask = '[+*/-]'
