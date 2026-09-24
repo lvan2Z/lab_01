@@ -15,3 +15,15 @@ class InvalidOperatorSequenceError(CalculatorError):
 
 class ConvertError(Exception):
     pass
+
+
+class UnknownUnitError(ConvertError):
+    pass
+
+
+class NegativeUnitError(ConvertError):
+    pass
+
+
+class DifferentGroupsError(ConvertError):
+    pass
